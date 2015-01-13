@@ -1,0 +1,96 @@
+.class public Lcom/lge/os/NetworkManagerEx;
+.super Ljava/lang/Object;
+.source "NetworkManagerEx.java"
+
+
+# static fields
+.field private static sInstance:Lcom/lge/os/NetworkManagerEx;
+
+
+# instance fields
+.field final mService:Landroid/os/INetworkManagementService;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .prologue
+    .line 16
+    const/4 v0, 0x0
+
+    sput-object v0, Lcom/lge/os/NetworkManagerEx;->sInstance:Lcom/lge/os/NetworkManagerEx;
+
+    return-void
+.end method
+
+.method private constructor <init>()V
+    .locals 2
+
+    .prologue
+    .line 30
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 32
+    const-string v1, "network_management"
+
+    invoke-static {v1}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v0
+
+    .line 33
+    .local v0, service:Landroid/os/IBinder;
+    invoke-static {v0}, Landroid/os/INetworkManagementService$Stub;->asInterface(Landroid/os/IBinder;)Landroid/os/INetworkManagementService;
+
+    move-result-object v1
+
+    iput-object v1, p0, Lcom/lge/os/NetworkManagerEx;->mService:Landroid/os/INetworkManagementService;
+
+    .line 35
+    return-void
+.end method
+
+
+# virtual methods
+.method public getDefault()Lcom/lge/os/NetworkManagerEx;
+    .locals 1
+
+    .prologue
+    .line 20
+    sget-object v0, Lcom/lge/os/NetworkManagerEx;->sInstance:Lcom/lge/os/NetworkManagerEx;
+
+    if-nez v0, :cond_0
+
+    .line 21
+    new-instance v0, Lcom/lge/os/NetworkManagerEx;
+
+    invoke-direct {v0}, Lcom/lge/os/NetworkManagerEx;-><init>()V
+
+    sput-object v0, Lcom/lge/os/NetworkManagerEx;->sInstance:Lcom/lge/os/NetworkManagerEx;
+
+    .line 24
+    :cond_0
+    sget-object v0, Lcom/lge/os/NetworkManagerEx;->sInstance:Lcom/lge/os/NetworkManagerEx;
+
+    return-object v0
+.end method
+
+.method public runSetPortRedirectRule(Ljava/lang/String;I)V
+    .locals 1
+    .parameter "iptablescmd"
+    .parameter "addORdel"
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+
+    .prologue
+    .line 50
+    iget-object v0, p0, Lcom/lge/os/NetworkManagerEx;->mService:Landroid/os/INetworkManagementService;
+
+    invoke-interface {v0, p1, p2}, Landroid/os/INetworkManagementService;->runSetPortRedirectRule(Ljava/lang/String;I)V
+
+    .line 52
+    return-void
+.end method
